@@ -13,7 +13,7 @@ public class TodayWeatherCommand implements Command{
         int timeIndex = 0;
         StringBuilder message = new StringBuilder();
         while (day == controller.getDay(timeIndex)) {
-            message.append(controller.threeHourInfo(timeIndex));
+            message.append(controller.threeHourInfo(timeIndex) + "\n");
             timeIndex++;
         }
         return message.toString();

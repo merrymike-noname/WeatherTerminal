@@ -3,30 +3,34 @@ package org.coursework.kovalenko.command;
 import java.util.Scanner;
 
 public class CommandHandler {
-    int commandIndex;
+    String command;
 
-    public CommandHandler (int commandIndex){
-        this.commandIndex = commandIndex;
+    public CommandHandler (String command){
+        this.command = command;
     }
 
     public void execute () {
-        Command command = null;
-        switch (commandIndex){
-            case 1: command = new CurrentWeatherCommand();
+        Command commandInterface = null;
+        switch (command){
+            case "-cw": commandInterface = new CurrentWeatherCommand();
             break;
-            case 2: command = new TodayWeatherCommand();
+            case "-tw": commandInterface = new TodayWeatherCommand();
             break;
-            case 3: command = new ChosenDayWeatherCommand(chooseDate());
+            case "-cdw": commandInterface = new ChosenDayWeatherCommand(chooseDate());
             break;
-            case 4: command = new FiveDayForecastCommand();
+            case "-fdf": commandInterface = new FiveDayForecastCommand();
             break;
-            case 5: command = new ChangeCityCommand();
+            case "-city": commandInterface = new ChangeCityCommand();
             break;
-            case 6: System.exit(0);
+            case "-help": commandInterface = new HelpCommand();
+            break;
+            case "-ex":
+                System.out.println("Exiting...");
+                System.exit(0);
         }
-        if (command == null) {
+        if (commandInterface == null) {
             System.out.println("Incorrect command. Try again");
-        } else System.out.println(command.buildMessage());
+        } else System.out.println(commandInterface.buildMessage());
     }
 
     private String chooseDate() {

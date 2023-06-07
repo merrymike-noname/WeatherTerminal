@@ -19,7 +19,7 @@ public class FiveDayForecastCommand implements Command {
         int startIndex = controller.getDateIndexForDay(startDay);
         StringBuilder forecast = new StringBuilder();
         for (int i = startIndex; i < controller.getLogLength(); i += 8) {
-            forecast.append(controller.threeHourInfo(i));
+            forecast.append(controller.threeHourInfo(i) + "\n");
         }
         return forecast.toString();
     }

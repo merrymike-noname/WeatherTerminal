@@ -66,7 +66,7 @@ public class Controller {
         threeHourInfo.append("- Feels like: ").append(mainData.get("feels_like")).append("\n");
         threeHourInfo.append("- Wind speed: ").append(windData.get("speed")).append("\n");
         threeHourInfo.append("- Weather: ").append(weatherData.get("main"))
-                .append(" (").append(weatherData.get("description")).append(")\n");
+                .append(" (").append(weatherData.get("description")).append(")");
         return threeHourInfo.toString();
     }
 }

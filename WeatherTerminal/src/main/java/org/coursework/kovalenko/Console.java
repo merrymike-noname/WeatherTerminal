@@ -2,42 +2,46 @@ package org.coursework.kovalenko;
 
 import org.coursework.kovalenko.command.CommandHandler;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Console {
     private final Controller controller = Controller.getController();
+    private final ArrayList<String> commandsList = new ArrayList<>(Arrays.asList("-ex", "-cw", "-tw", "-cdw", "-fdf", "-city", "-help"));
     Scanner scanner = new Scanner(System.in);
 
     public void start() {
         System.out.println("Welcome to WeatherTerminal!");
-        updateController();
-    }
-
-    public void updateController(){
         chooseCity();
     }
 
-    public void chooseAction() {
-        System.out.println("""
-                What do you want to do? (pick a number)
-                |\t1. See current weather
-                |\t2. See today`s weather
-                |\t3. See weather for a chosen day
-                |\t4. See a 5-day forecast
-                |\t5. Change city
-                |\t6. Exit""");
-        executeCommand(Integer.parseInt(scanner.nextLine()));
+    public void commandListener() {
+        boolean isRunning = true;
+        String command;
+        while (isRunning){
+            command = scanner.nextLine();
+             if (commandsList.contains(command)) {
+                executeCommand(command);
+                 if (command.equals("-ex")) {
+                     isRunning = false;
+                 }
+             } else {
+                 System.out.println("Unknown command");
+             }
+        }
     }
 
     public void chooseCity() {
         System.out.println("Enter the city name:");
         controller.update(scanner.nextLine(), "metric");
-        chooseAction();
+        System.out.println("City changed successfully\nType -help to get a list of available commands");
+        commandListener();
     }
 
-    private void executeCommand(int commandIndex) {
-        CommandHandler commandHandler = new CommandHandler(commandIndex);
+    private void executeCommand(String command) {
+        CommandHandler commandHandler = new CommandHandler(command);
         commandHandler.execute();
-        chooseAction();
+        commandListener();
     }
 }
