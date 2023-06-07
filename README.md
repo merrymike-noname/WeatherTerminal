@@ -9,11 +9,10 @@ The architecture is built using 3 patterns:
 - Command (All classes from package "command", interface Command)
 
 The application runs in console and allows user to execute commands:
-|	-cw -- get current weather
-|	-tw -- weather till the end of this day
-|	-cdw -- choose a day to get its weather at 12 p.m. (not farther than 5 days from current date)
-|	-fdf -- get five day forecast (for 12 p.m. each day)
-|	-help -- get list of commands
-|	-city -- change city
-|	-ex -- exit
-
+-cw -- get current weather
+-tw -- weather till the end of this day
+-cdw -- choose a day to get its weather at 12 p.m. (not farther than 5 days from current date)
+-fdf -- get five day forecast (for 12 p.m. each day)
+-help -- get list of commands
+-city -- change city
+-ex -- exit
