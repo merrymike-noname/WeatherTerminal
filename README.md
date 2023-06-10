@@ -1,7 +1,7 @@
 # WeatherTerminal
 Console application for getting weather data
 
-This application takes weather data from https://openweathermap.org and presents it to user in different ways, which user can choose using commands
+This application takes weather data from https://openweathermap.org (provides information for every 3 hours) and presents it in different ways, which user can choose by typing commands
 
 The architecture is built using 3 patterns:
 - MVC (WeatherCoomection + Controller + Console + Application)
