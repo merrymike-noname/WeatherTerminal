@@ -1,14 +1,20 @@
 package org.coursework.kovalenko;
 
-import org.coursework.kovalenko.command.CommandHandler;
+import org.coursework.kovalenko.command.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.*;
 
 public class Console {
     private final Controller controller = Controller.getController();
-    private final ArrayList<String> commandsList = new ArrayList<>(Arrays.asList("-ex", "-cw", "-tw", "-cdw", "-fdf", "-city", "-help"));
+    private Map<String, Command> commandMap = new HashMap<>(){{
+        put("-cw", new CurrentWeatherCommand());
+        put("-tw", new TodayWeatherCommand());
+        put("-cdw", new ChosenDayWeatherCommand());
+        put("-fdf", new FiveDayForecastCommand());
+        put("-city", new ChangeCityCommand());
+        put("-help", new HelpCommand());
+        put("-ex", new ExitCommand());
+    }};
     Scanner scanner = new Scanner(System.in);
 
     public void start() {
@@ -21,11 +27,8 @@ public class Console {
         String command;
         while (isRunning){
             command = scanner.nextLine();
-             if (commandsList.contains(command)) {
+             if (commandMap.containsKey(command)) {
                 executeCommand(command);
-                 if (command.equals("-ex")) {
-                     isRunning = false;
-                 }
              } else {
                  System.out.println("Unknown command");
              }
@@ -40,7 +43,7 @@ public class Console {
     }
 
     private void executeCommand(String command) {
-        CommandHandler commandHandler = new CommandHandler(command);
+        CommandHandler commandHandler = new CommandHandler(command, commandMap);
         commandHandler.execute();
         commandListener();
     }
