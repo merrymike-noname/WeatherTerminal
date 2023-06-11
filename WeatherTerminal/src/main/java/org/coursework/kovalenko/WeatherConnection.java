@@ -3,19 +3,17 @@ package org.coursework.kovalenko;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class WeatherConnection {
     private static WeatherConnection weatherConnection;
-    private static final String TOKEN = "dbddd4c7226f884898db58e2d5e7cad8";
 
     public static synchronized WeatherConnection getWeatherConnection() {
         if (weatherConnection == null){
@@ -35,6 +33,7 @@ public class WeatherConnection {
     }
 
     public Map<String, Object> getFullResponseMap (String city, String units) {
+        String TOKEN = getToken();
         Map<String, Object> fullResponseMap = new HashMap<>();
         String urlRequest = "https://api.openweathermap.org/data/2.5/forecast?q="
                 + city + "&appid=" + TOKEN + "&units=" + units;
@@ -53,6 +52,19 @@ public class WeatherConnection {
             System.out.println(e.getMessage());
         }
         return fullResponseMap;
+    }
+
+    private String getToken() {
+        String configFilePath = "src/config.properties";
+        FileInputStream propsInput;
+        Properties prop = new Properties();
+        try {
+            propsInput = new FileInputStream(configFilePath);
+            prop.load(propsInput);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return prop.getProperty("TOKEN");
     }
 
     public ArrayList<Map<String, Object>> getContent (String city, String units) {
